@@ -60,19 +60,19 @@ contract AMM is AccessControl{
 		//YOUR CODE HERE
 
 		if (sellToken == tokenA) {
-		    qtyA = (ERC20(tokenA).balanceOf(address(this))) + sellAmount;
-		    exchRate = (qtyA / (ERC20(tokenB).balanceOf(address(this))));
-		    qtyB = (ERC20(tokenB).balanceOf(address(this))) / exchRate;
-		    swapAmt = qtyB * ((10000 - feebps) / 10000);
+		    qtyA = ERC20(tokenA).balanceOf(address(this)) + sellAmount;
+		    exchRate = qtyA / (ERC20(tokenB).balanceOf(address(this)));
+		    qtyB = ERC20(tokenB).balanceOf(address(this)) / exchRate;
+		    swapAmt = qtyB * (10000 - feebps) / 10000;
 			ERC20(tokenA).transferFrom(msg.sender, address(this), sellAmount);
 			ERC20(tokenB).transfer(msg.sender, swapAmt);
 		}
 
 		if (sellToken == tokenB){
-		    qtyB = (ERC20(tokenB).balanceOf(address(this))) + sellAmount;
-		    exchRate = (qtyB / (ERC20(tokenA).balanceOf(address(this))));
-		    qtyA = (ERC20(tokenA).balanceOf(address(this))) / exchRate;
-		    swapAmt = qtyA * ((10000 - feebps) / 10000);
+		    qtyB = ERC20(tokenB).balanceOf(address(this)) + sellAmount;
+		    exchRate = qtyB / (ERC20(tokenA).balanceOf(address(this)));
+		    qtyA = ERC20(tokenA).balanceOf(address(this)) / exchRate;
+		    swapAmt = qtyA * (10000 - feebps) / 10000;
 			ERC20(tokenB).transferFrom(msg.sender, address(this), sellAmount);
 			ERC20(tokenA).transfer(msg.sender, swapAmt);
 		}
